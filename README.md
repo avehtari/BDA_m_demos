@@ -4,6 +4,6 @@ Analysis, 3rd ed by Gelman, Carlin, Stern, Dunson, Vehtari, and Rubin (BDA3)](ht
 
 Currently there are demos for BDA3 Chapters 2, 3, 4, 5, 6, 10 and 11. Furthermore there is a demo for [MatlabStan](https://github.com/brian-lau/MatlabStan).
 
-These demos were written for Matlab by Aki Vehtari.
+These demos were written for Matlab/Octave by Aki Vehtari.
 
-See also corresponding [Python demos](https://github.com/avehtari/BDA_py_demos)
+The corresponding [Python demos](https://github.com/avehtari/BDA_py_demos)
