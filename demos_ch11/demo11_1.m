@@ -149,12 +149,12 @@ for i1=8:201
 end
 
 pause
-% Illustrate burn-in
+% Illustrate warm-up
 % first plot 
 hb=line(tt(1,1),tt(1,2),'Marker','o','Color','m'); % this is to get nice legend
 line(tt(1:2:50,1),tt(1:2:50,2),'Marker','o','LineStyle','none','Color','m');
 line(tt(1:50,1),tt(1:50,2),'Color','m');
-hl=legend([he h1 hb],'90% HPD','Markov chain','Burn-in',3);
+hl=legend([he h1 hb],'90% HPD','Markov chain','warm-up',3);
 set(hl,'FontSize',14)
 delete(ht)
 
@@ -168,10 +168,10 @@ he=ellipse(q(2),q(1),pi/4,0,0,'r');
 set(gca,'DataAspectRatio',[1 1 1])
 set(gca,'XLim',[-4.5 4.5],'YLim',[-4.5 4.5])
 set(gca,'Box','on')
-% Plot again the first 200 samples withou burn-in
+% Plot again the first 200 samples withou warm-up
 h1=line(tt(51:2:201,1),tt(51:2:201,2),'Marker','o','LineStyle','none');
 title('Gibbs sampling')
-hl=legend([he h1],'90% HPD','Samples from the chain after burn-in',3);
+hl=legend([he h1],'90% HPD','Samples from the chain after warm-up',3);
 set(hl,'FontSize',14)
 
 pause
@@ -184,7 +184,7 @@ he=ellipse(q(2),q(1),pi/4,0,0,'r');
 set(gca,'DataAspectRatio',[1 1 1])
 set(gca,'XLim',[-4.5 4.5],'YLim',[-4.5 4.5])
 set(gca,'Box','on')
-% Remove burn-in. In this case 50 first iterations, and plot the
+% Remove warm-up. In this case 50 first iterations, and plot the
 % rest of the samples
 h1=line(tt(51:2:end,1),tt(51:2:end,2),'Marker','o','LineStyle','none');
 title('Gibbs sampling')

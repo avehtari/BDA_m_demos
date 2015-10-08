@@ -55,7 +55,7 @@ pause
 burnin=201;
 h=plot(burnin:5000,cumsum(squeeze(tts(burnin:5000,1,:)))./repmat([1:(5000-burnin+1)]',1,4));
 xlabel('t')
-title('Multiple chains - estimates given t first samples after burn-in')
+title('Multiple chains - estimates given t first samples after warm-up')
 
 pause
 line([burnin M],[0 0])

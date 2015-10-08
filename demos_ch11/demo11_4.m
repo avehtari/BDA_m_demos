@@ -50,8 +50,8 @@ legend([he h1],'90% HPD','Starting points')
 % exercises, we load here pre-computed chains and PSRF-values
 
 % `tts' contains samples, `p1' and 'p2' contain PSRF values for t1
-% and t2 using 50% burn-in, `pp1' and 'pp2' contain PSRF values for
-% t1 and t2 using 10% burn-in, PSRF-values have been computed for
+% and t2 using 50% warm-up, `pp1' and 'pp2' contain PSRF values for
+% t1 and t2 using 10% warm-up, PSRF-values have been computed for
 % each time-step. 
 load demo11_4
 %>> whos -file demo11_4
@@ -111,7 +111,7 @@ set(gcf,'DefaultLineLineWidth',2)
 pause
 
 % Plot PSRF for different chain lengths
-% remove first half as a burn-in
+% remove first half as a warm-up
 subplot(2,1,1)
 semilogx(10:10:M,p1(10:10:M))  
 axis([10 M 0 30])
@@ -141,12 +141,12 @@ subplot(2,1,2)
 axis([1000 M .5 1.5])
 pause
 
-% plot PSRF with 50% burn-in and 10% burn-in
+% plot PSRF with 50% warm-up and 10% warm-up
 subplot(2,1,1)
 plot(10:10:M,p1(10:10:M),10:10:M,pp1(10:10:M))  
 hl=line([4 M],[1 1],'LineStyle','--','Color','k');
 axis([200 M 0.9 1.25])
-title('Running PSRF with different burn-in length')
+title('Running PSRF with different warm-up length')
 ylabel('\theta_1')
 legend('PSRF(n/2:n)','PSRF(n/10:n)')
 subplot(2,1,2)

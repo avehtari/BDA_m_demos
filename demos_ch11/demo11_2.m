@@ -174,10 +174,10 @@ set(hl,'FontSize',14)
 pause
 % remove plot of the 200 first samples
 delete(h)
-% Remove burn-in and plot the every 5th sample starting from iteration 105
+% Remove warm-up and plot the every 5th sample starting from iteration 105
 h=line(tt(105:5:end,1),tt(105:5:end,2),'Marker','o','LineStyle','none');
 title('Metropolis-algorithm')
-hl=legend([he h],'90% HPD','Samples from the chain after 200 step burn-in',3);
+hl=legend([he h],'90% HPD','Samples from the chain after 200 step warm-up',3);
 set(hl,'FontSize',14)
 
 pause
