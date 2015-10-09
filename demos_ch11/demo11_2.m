@@ -59,7 +59,7 @@ load demo11_1
 % divide the number of rejections with M to get rejection rate
 %rr/M
 
-% The rest is just for illusttration
+% The rest is just for illustration
 
 clf
 % Plot 90% HPD
@@ -82,7 +82,7 @@ hs=line(tt(1,1),tt(1,2),'Marker','o','LineStyle','none');
 title('Metropolis-algorithm')
 xlabel('\theta_1')
 ylabel('\theta_2')
-hl=legend([he hs],'90% HPD','Starting point',3);
+hl=legend([he hs],'90% HPD','Starting point','location','southeast');
 set(hl,'FontSize',14)
 pause
 
@@ -92,25 +92,25 @@ ht=text(-4,4,'','FontSize',16,'FontWeight','bold','Color','b');
 for i1=1:20
   % plot the 90% HPD of the proposal distribution
   h1=ellipse(sp*2.147,sp*2.147,0,tt(i1,1),tt(i1,2),'b');
-  hl=legend([he hs h1],'90% HPD',samplestring,'Proposal distribution (90% HPD)',3);
+  hl=legend([he hs h1],'90% HPD',samplestring,'Proposal distribution (90% HPD)','location','southeast');
   set(hl,'FontSize',14)
   pause
   % plot the proposal and ratio
   h2=line(ttall(i1,1),ttall(i1,2),'LineStyle','none','Marker','*');
   set(ht,'String',sprintf('Step %d - Acceptance ratio r=%.2f',i1,all(i1)),'Color','b')
-  hl=legend([he hs h1 h2],'90% HPD',samplestring,'Proposal distribution (90% HPD)','Proposal \theta^*',3);
+  hl=legend([he hs h1 h2],'90% HPD',samplestring,'Proposal distribution (90% HPD)','Proposal \theta^*','location','southeast');
   set(hl,'FontSize',14)
   pause
   if ttall(i1,1)==tt(i1+1,1) && ttall(i1,2)==tt(i1+1,2)
     % accepted
     set(h2,'Color',[0 0.5 0]);
-    hl=legend([he hs h1 h2],'90% HPD',samplestring,'Proposal distribution (90% HPD)','Proposal \theta^* accepted',3);
+    hl=legend([he hs h1 h2],'90% HPD',samplestring,'Proposal distribution (90% HPD)','Proposal \theta^* accepted','location','southeast');
     set(hl,'FontSize',14)
     set(ht,'String',sprintf('Step %d - Proposal accepted, r=%.2f',i1,all(i1)),'Color',[0 0.5 0])
   else
     % rejected
     set(h2,'Color','r');
-    hl=legend([he hs h1 h2],'90% HPD',samplestring,'Proposal distribution (90% HPD)','Proposal \theta^* rejected',3);
+    hl=legend([he hs h1 h2],'90% HPD',samplestring,'Proposal distribution (90% HPD)','Proposal \theta^* rejected','location','southeast');
     set(hl,'FontSize',14)
     set(ht,'String',sprintf('Step %d - Proposal rejected, r=%.2f',i1,all(i1)),'Color','r')
   end
@@ -119,7 +119,7 @@ for i1=1:20
   delete(h2)
   h2=line(tt(i1+1,1),tt(i1+1,2),'LineStyle','none','Marker','o','Color','b');
   samplestring='Samples from the chain';
-  hl=legend([he h2],'90% HPD',samplestring,3);
+  hl=legend([he h2],'90% HPD',samplestring,'location','southeast');
   set(hl,'FontSize',14)
   set(ht,'String',sprintf('Step %d',i1),'Color','b')
   pause
@@ -130,7 +130,7 @@ pause
 % connect the samples with a line
 h1=line(tt(1,1),tt(1,2),'Marker','o');
 line(tt(1:21,1),tt(1:21,2));
-hl=legend([he h1],'90% HPD','Markov chain',3);
+hl=legend([he h1],'90% HPD','Markov chain','location','southeast');
 set(hl,'FontSize',14)
 
 pause
@@ -168,7 +168,7 @@ set(gca,'Box','on')
 % Plot 200 first samples without lines
 h=line(tt(1:201,1),tt(1:201,2),'Marker','o','LineStyle','none');
 title('Metropolis-algorithm')
-hl=legend([he h],'90% HPD','Samples from the chain',3);
+hl=legend([he h],'90% HPD','Samples from the chain','location','southeast');
 set(hl,'FontSize',14)
 
 pause
@@ -177,7 +177,7 @@ delete(h)
 % Remove warm-up and plot the every 5th sample starting from iteration 105
 h=line(tt(105:5:end,1),tt(105:5:end,2),'Marker','o','LineStyle','none');
 title('Metropolis-algorithm')
-hl=legend([he h],'90% HPD','Samples from the chain after 200 step warm-up',3);
+hl=legend([he h],'90% HPD','Samples from the chain after 200 step warm-up','location','southeast');
 set(hl,'FontSize',14)
 
 pause

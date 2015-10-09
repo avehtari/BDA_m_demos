@@ -66,7 +66,7 @@ h1=line(tt(1,1),tt(1,2),'Marker','o','LineStyle','none');
 title('Gibbs sampling')
 xlabel('\theta_1')
 ylabel('\theta_2')
-hl=legend([he h1],'90% HPD','Starting point',3);
+hl=legend([he h1],'90% HPD','Starting point','location','southeast');
 set(hl,'FontSize',14)
 pause
 for i1=1:2:5
@@ -74,15 +74,15 @@ for i1=1:2:5
   hl1=line(xlim,[tt(i1,2) tt(i1,2)]','Color','k','LineStyle','--','LineWidth',2);
   hl2=line(Y1,tt(i1,2)+normpdf(Y1,y1+r.*(tt(i1,2)-y2),sqrt((1-r.^2)))*1,'Color','b','LineStyle','-','LineWidth',2);
   if i1==1
-    hl=legend([he h1 hl2],'90% HPD','Starting point','Conditional density given \theta_2',3);
+    hl=legend([he h1 hl2],'90% HPD','Starting point','Conditional density given \theta_2','location','southeast');
   else
-    hl=legend([he h1 hl2],'90% HPD','Samples from the chain','Conditional density given \theta_2',3);
+    hl=legend([he h1 hl2],'90% HPD','Samples from the chain','Conditional density given \theta_2','location','southeast');
   end
   set(hl,'FontSize',14)
   pause
   % sample
   line(tt(i1+1,1),tt(i1+1,2),'LineStyle','none','Marker','o','Color','b')
-  hl=legend([he h1 hl2],'90% HPD','Samples from the chain','Conditional density given \theta_2',3);
+  hl=legend([he h1 hl2],'90% HPD','Samples from the chain','Conditional density given \theta_2','location','southeast');
   set(hl,'FontSize',14)
   pause
   delete(hl1)
@@ -90,7 +90,7 @@ for i1=1:2:5
   % plot the conditional distribution of theta_2 given theta_1
   hl1=line([tt(i1+1,1) tt(i1+1,1)]',get(gca,'YLim'),'Color','k','LineStyle','--','LineWidth',2);
   hl2=line(tt(i1+1,1)+normpdf(Y2,y2+r.*(tt(i1+1,1)-y1),sqrt((1-r.^2)))*1,Y2,'Color','b','LineStyle','-','LineWidth',2);
-  hl=legend([he h1 hl2],'90% HPD','Samples from the chain','Conditional density given \theta_1',3);
+  hl=legend([he h1 hl2],'90% HPD','Samples from the chain','Conditional density given \theta_1','location','southeast');
   set(hl,'FontSize',14)
   pause
   % plot the sample
@@ -99,7 +99,7 @@ for i1=1:2:5
   delete(hl1)
   delete(hl2)
 end
-hl=legend([he h1],'90% HPD','Samples from the chain',3);
+hl=legend([he h1],'90% HPD','Samples from the chain','location','southeast');
 set(hl,'FontSize',14)
 
 pause
@@ -107,7 +107,7 @@ pause
 % connect plotted samples with a line
 h1=line(tt(1,1),tt(1,2),'Marker','o');
 line(tt(1:7,1),tt(1:7,2));
-hl=legend([he h1],'90% HPD','Markov chain',3);
+hl=legend([he h1],'90% HPD','Markov chain','location','southeast');
 set(hl,'FontSize',14)
 
 pause
@@ -126,7 +126,7 @@ h1=line(tt(1,1),tt(1,2),'Marker','o'); % this is to get nice legend
 line(tt(1:2:7,1),tt(1:2:7,2),'Marker','o','LineStyle','none');
 line(tt(1:7,1),tt(1:7,2));
 title('Gibbs sampling')
-hl=legend([he h1],'90% HPD','Markov chain',3);
+hl=legend([he h1],'90% HPD','Markov chain','location','southeast');
 set(hl,'FontSize',14)
 
 % Plot the next about 200 samples
@@ -154,7 +154,7 @@ pause
 hb=line(tt(1,1),tt(1,2),'Marker','o','Color','m'); % this is to get nice legend
 line(tt(1:2:50,1),tt(1:2:50,2),'Marker','o','LineStyle','none','Color','m');
 line(tt(1:50,1),tt(1:50,2),'Color','m');
-hl=legend([he h1 hb],'90% HPD','Markov chain','warm-up',3);
+hl=legend([he h1 hb],'90% HPD','Markov chain','warm-up','location','southeast');
 set(hl,'FontSize',14)
 delete(ht)
 
@@ -171,7 +171,7 @@ set(gca,'Box','on')
 % Plot again the first 200 samples withou warm-up
 h1=line(tt(51:2:201,1),tt(51:2:201,2),'Marker','o','LineStyle','none');
 title('Gibbs sampling')
-hl=legend([he h1],'90% HPD','Samples from the chain after warm-up',3);
+hl=legend([he h1],'90% HPD','Samples from the chain after warm-up','location','southeast');
 set(hl,'FontSize',14)
 
 pause
@@ -188,7 +188,7 @@ set(gca,'Box','on')
 % rest of the samples
 h1=line(tt(51:2:end,1),tt(51:2:end,2),'Marker','o','LineStyle','none');
 title('Gibbs sampling')
-hl=legend([he h1],'90% HPD','950 samples from the chain',3);
+hl=legend([he h1],'90% HPD','950 samples from the chain','location','southeast');
 set(hl,'FontSize',14)
 
 pause
