@@ -186,9 +186,9 @@ clf
 
 subplot(3,1,1)
 % show trends
-burnin=105;
-h1=plot([burnin:M],tt(burnin:M,:));
-line([burnin M],[0 0])
+warmup=105;
+h1=plot([warmup:M],tt(warmup:M,:));
+line([warmup M],[0 0])
 axis tight
 title('Metropolis-algorithm - trends')
 hl=legend(h1,'\theta_1', '\theta_2');
@@ -196,9 +196,9 @@ set(hl,'FontSize',14)
 
 subplot(3,1,2)
 % show how the average behaves when more samples are obtained
-burnin=105;
-h1=plot([burnin:M],cumsum(tt(burnin:M,:))./repmat([1:length(burnin:M)]',1,2));
-line([burnin M],[0 0])
+warmup=105;
+h1=plot([warmup:M],cumsum(tt(warmup:M,:))./repmat([1:length(warmup:M)]',1,2));
+line([warmup M],[0 0])
 axis([105 5000 -0.5 0.2])
 title('Cumulative average')
 hl=legend(h1,'\theta_1', '\theta_2',4);
@@ -207,7 +207,7 @@ set(hl,'FontSize',14)
 subplot(3,1,3)
 % show the autocorrelation
 maxlag=20;
-ac=acorr(tt(burnin:2:M,:),maxlag);
+ac=acorr(tt(warmup:2:M,:),maxlag);
 % Note: autocorrelation for 0 is 1
 h1=plot(0:maxlag,[1 1; ac]);
 set(gca,'XLim',[0 maxlag],'YLim',[-0.2 1])
@@ -219,24 +219,24 @@ set(hl,'FontSize',14)
 pause
 clf
 % show how the average behaves when more samples are obtained
-burnin=105;
-h=plot([burnin:M],cumsum(tt(burnin:M,:))./repmat([1:length(burnin:M)]',1,2));
-line([burnin M],[0 0])
+warmup=105;
+h=plot([warmup:M],cumsum(tt(warmup:M,:))./repmat([1:length(warmup:M)]',1,2));
+line([warmup M],[0 0])
 axis([105 5000 -0.5 0.5])
 legend('\theta_1','\theta_2')
 title('Metropolis sampling - cumulative average')
 % compute the effective number of samples
-[R,neff] = psrf(tt(burnin:M,:));
+[R,neff] = psrf(tt(warmup:M,:));
 % for a simpler plot, use the minimum neff (each parameter has its own neff)
 neff=min(neff);
 % plot approximative 95% quantiles for Markov chain Monte Carlo error
 % this takes into account that samples are not independent
-line([burnin:M],1.96./sqrt([burnin:M]/(M/neff)),'LineStyle','--','Color','k')
-h2=line([burnin:M],-1.96./sqrt([burnin:M]/(M/neff)),'LineStyle','--','Color','k');
+line([warmup:M],1.96./sqrt([warmup:M]/(M/neff)),'LineStyle','--','Color','k')
+h2=line([warmup:M],-1.96./sqrt([warmup:M]/(M/neff)),'LineStyle','--','Color','k');
 legend([h' h2],'\theta_1','\theta_2','95% interval for MCMC error')
 pause
 % For comparison plot 95% quantiles for Monte Carlo error
 % if we would be able to obtain independent samples
-line([burnin:M],1.96./sqrt([burnin:M]),'LineStyle','-.','Color','k')
-h3=line([burnin:M],-1.96./sqrt([burnin:M]),'LineStyle','-.','Color','k');
+line([warmup:M],1.96./sqrt([warmup:M]),'LineStyle','-.','Color','k')
+h3=line([warmup:M],-1.96./sqrt([warmup:M]),'LineStyle','-.','Color','k');
 legend([h' h2 h3],'\theta_1','\theta_2','95% interval for MCMC error','95% interval for independent MC')

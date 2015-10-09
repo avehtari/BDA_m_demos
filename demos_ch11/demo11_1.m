@@ -197,9 +197,9 @@ clf
 
 subplot(3,1,1)
 % show trends
-burnin=51;
-h1=plot([burnin:2:M]./2,tt(burnin:2:M,:));
-line([burnin M]./2,[0 0])
+warmup=51;
+h1=plot([warmup:2:M]./2,tt(warmup:2:M,:));
+line([warmup M]./2,[0 0])
 axis tight
 title('Gibbs sampling - trends')
 hl=legend(h1,'\theta_1', '\theta_2');
@@ -207,9 +207,9 @@ set(hl,'FontSize',14)
 
 subplot(3,1,2)
 % show how the average behaves when more samples are obtained
-burnin=51;
-h1=plot([burnin:2:M]./2,cumsum(tt(burnin:2:M,:))./repmat([1:length(burnin:2:M)]',1,2));
-line([burnin M]./2,[0 0])
+warmup=51;
+h1=plot([warmup:2:M]./2,cumsum(tt(warmup:2:M,:))./repmat([1:length(warmup:2:M)]',1,2));
+line([warmup M]./2,[0 0])
 axis tight
 title('Cumulative average')
 hl=legend(h1,'\theta_1', '\theta_2');
@@ -218,7 +218,7 @@ set(hl,'FontSize',14)
 subplot(3,1,3)
 % plot the estimated autocorrelation function
 maxlag=20;
-ac=acorr(tt(burnin:2:M,:),maxlag);
+ac=acorr(tt(warmup:2:M,:),maxlag);
 h1=plot(0:maxlag,[1 1;ac]);
 set(gca,'XLim',[0 maxlag],'YLim',[-0.2 1])
 line([0 maxlag],[0 0],'LineStyle','--','Color','k')
@@ -230,23 +230,23 @@ pause
 % Clear again
 clf
 % show how the average behaves when more samples are obtained
-burnin=51;
-h=plot([burnin:2:M]./2,cumsum(tt(burnin:2:M,:))./repmat([1:length(burnin:2:M)]',1,2));
-line([burnin M]./2,[0 0])
+warmup=51;
+h=plot([warmup:2:M]./2,cumsum(tt(warmup:2:M,:))./repmat([1:length(warmup:2:M)]',1,2));
+line([warmup M]./2,[0 0])
 axis tight
 title('Gibbs sampling - cumulative average')
 % compute the effective number of samples
-[R,neff] = psrf(tt(burnin:2:end,:));
+[R,neff] = psrf(tt(warmup:2:end,:));
 % for a simpler plot, use the minimum neff (each parameter has its own neff)
 neff=min(neff);
 % plot approximative 95% quantiles for Markov chain Monte Carlo error
 % this takes into account that samples are not independent
-line([[burnin:2:M]./2],1.96./sqrt([burnin:2:M]/2/(M./2./neff)),'LineStyle','--','Color','k')
-h2=line([[burnin:2:M]./2],-1.96./sqrt([burnin:2:M]/2/(M./2./neff)),'LineStyle','--','Color','k');
+line([[warmup:2:M]./2],1.96./sqrt([warmup:2:M]/2/(M./2./neff)),'LineStyle','--','Color','k')
+h2=line([[warmup:2:M]./2],-1.96./sqrt([warmup:2:M]/2/(M./2./neff)),'LineStyle','--','Color','k');
 legend([h' h2],'\theta_1','\theta_2','95% interval for MCMC error')
 pause
 % For comparison plot 95% quantiles for Monte Carlo error
 % if we would be able to obtain independent samples
-line([[burnin:2:M]./2],1.96./sqrt([burnin:2:M]/2),'LineStyle','-.','Color','k')
-h3=line([[burnin:2:M]./2],-1.96./sqrt([burnin:2:M]/2),'LineStyle','-.','Color','k');
+line([[warmup:2:M]./2],1.96./sqrt([warmup:2:M]/2),'LineStyle','-.','Color','k')
+h3=line([[warmup:2:M]./2],-1.96./sqrt([warmup:2:M]/2),'LineStyle','-.','Color','k');
 legend([h' h2 h3],'\theta_1','\theta_2','95% interval for MCMC error','95% interval for independent MC')
