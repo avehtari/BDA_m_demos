@@ -38,8 +38,8 @@ Y2=linspace(-4.5,4.5,200);
 % For demonstration load pre-computed values
 % Replace this with your algorithm!
 % tt is a M x 2 matrix, with M samples of both theta_1 and theta_2
-load demo11_2
-%>> whos -file demo11_2
+load demo11_1
+%>> whos -file demo11_1
 %  Name      Size                    Bytes  Class
 %  tt     2001x2                     32016  double array
 

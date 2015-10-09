@@ -47,8 +47,8 @@ pause
 % For demonstration load pre-computed values
 % Replace this with your algorithm!
 % `ttall' is all proposals, `all' is all acceptance ratios
-load demo11_1
-%whos -file demo11_1
+load demo11_2
+%whos -file demo11_2
 %  Name        Size                    Bytes  Class
 %  all         1x4999                  39992  double array
 %  tt       5000x2                     80000  double array
