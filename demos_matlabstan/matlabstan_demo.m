@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-03-11 10:27:46 EET
+%   Last modified: 2015-11-02 19:33:07 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -103,32 +103,36 @@ hist(samples.oddsratio,50)
 
 %% Gaussian linear model
 linear_code = {
-  'data {'
-  '    int<lower=0> N; // number of data points '
-  '    vector[N] x; // '
-  '    vector[N] y; // '
-  '}'
-  'parameters {'
-  '    real alpha; '
-  '    real beta; '
-  '    real<lower=0> sigma;'
-  '}'
-  'transformed parameters {'
-  '    vector[N] mu;'
-  '    mu <- alpha + beta*x;'
-  '}'
-  'model {'
-  '    y ~ normal(mu, sigma);'
-  '}'
+   'data {'
+   '    int<lower=0> N; // number of data points '
+   '    vector[N] x; // '
+   '    vector[N] y; // '
+   '    real xpred; // input location for prediction'
+   '}'
+   'parameters {'
+   '    real alpha; '
+   '    real beta; '
+   '    real<lower=0> sigma;'
+   '}'
+   'transformed parameters {'
+   '    vector[N] mu;'
+   '    mu <- alpha + beta*x;'
+   '}'
+   'model {'
+   '    y ~ normal(mu, sigma);'
+   '}'
+   'generated quantities {'
+   '    real ypred;'
+   '    ypred <- normal_rng(alpha + beta*xpred, sigma);'
+   '}'
 };
 % Data for Stan
-d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
-x=repmat(double(d(:,1)),1,4)';x=x(:);
-y=double(d(:,2:5))';y=y(:);
-N=numel(x);
-dat = struct('N',N,...
-             'x',x,...
-             'y',y);
+d = dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
+x = repmat(double(d(:,1)),1,4)'; x = x(:);
+y = double(d(:,2:5))'; y = y(:);
+N = numel(x);
+xpred = 2016;
+dat = struct('N',N, 'x',x,'y',y,'xpred',xpred);
 % Compile and fit the model
 fit = stan('model_code',linear_code,'data',dat,'sample_file','kilpis','file_overwrite',true,'verbose',true);
 fit.block()
@@ -137,7 +141,9 @@ fit.block()
 samples=fit.extract('permuted',true);
 subplot(1,3,1)
 mu = samples.mu;
-plot(x,prctile(mu,[50]),'r-',x,prctile(mu,[5 95]),'r--',x,y,'b.')
+ypred = samples.ypred;
+plot(x,prctile(mu,[50]),'r-',x,prctile(mu,[5
+95]),'r--',x,y,'b.')
 xlabel('Year')
 ylabel('Summer temperature @ Kilpisjarvi');
 subplot(1,3,2)
@@ -147,9 +153,8 @@ xlabel('beta')
 %probability that beta>0
 mean(beta>0)
 subplot(1,3,3)
-sigma = samples.sigma;
-hist(sigma,50)
-xlabel('sigma')
+hist(samples.ypred,50)
+xlabel(sprintf('y-prediction for x=%d', xpred))
 
 %% Gaussian linear model with adjustable priors
 linear_code = {
