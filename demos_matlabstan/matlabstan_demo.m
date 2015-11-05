@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-11-02 19:33:07 EET
+%   Last modified: 2015-11-05 10:12:20 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -337,7 +337,51 @@ nu = samples.nu;
 hist(nu,50)
 xlabel('nu')
 
-%% Comparison of k groups (ANOVA)
+%% Comparison of k groups with common variance (ANOVA)
+group_code = {
+  'data {'
+  '    int<lower=0> N; // number of data points '
+  '    int<lower=0> K; // number of groups '
+  '    int<lower=1,upper=K> x[N]; // group indicator '
+  '    vector[N] y; // '
+  '}'
+  'parameters {'
+  '    vector[K] mu;    // group means '
+  '    real sigma;      // common std '
+  '}'
+  'model {'
+  '    for (n in 1:N)'
+  '      y[n] ~ normal(mu[x[n]], sigma);'
+  '}'
+             };
+% Data for Stan
+d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
+% Is there difference between different summer months?
+x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
+y=double(d(:,2:5))';y=y(:);
+N=numel(x);
+dat = struct('N',N,...
+             'K',4,... % 4 groups
+             'x',x,... % group indicators
+             'y',y);   % observations
+% Compile and fit the model
+fit = stan('model_code',group_code,'data',dat,'sample_file','kilpis','file_overwrite',true,'verbose',true);
+fit.block()
+
+% Plot
+samples=fit.extract('permuted',true);
+mu = samples.mu;
+boxplot(mu)
+% matrix of probabilities that one mu is larger than other
+for k1=1:4
+  for k2=(k1+1):4
+    ps(k1,k2)=mean(mu(:,k1)>mu(:,k2));
+    ps(k2,k1)=1-ps(k1,k2);
+  end
+end
+ps
+
+%% Comparison of k groups with unequal variances
 group_code = {
   'data {'
   '    int<lower=0> N; // number of data points '
@@ -381,7 +425,7 @@ for k1=1:4
 end
 ps
 
-%% Hierarchical prior model for comparison of k groups (ANOVA)
+%% Hierarchical prior for means in comparison of k groups
 % results do not differ much from the previous, because there is only
 % few groups and quite much data per group, but this works as an example anyway
 hier_code = {
@@ -395,12 +439,127 @@ hier_code = {
   '    real mu0;             // prior mean '
   '    real<lower=0> sigma0; // prior std '
   '    vector[K] mu;         // group means '
-  '    vector<lower=0>[K] sigma; // group stds '
+  '    real sigma;           // common std '
   '}'
   'model {'
   '    mu0 ~ normal(10,10);      // weakly informative prior '
   '    sigma0 ~ cauchy(0,4);     // weakly informative prior '
   '    mu ~ normal(mu0, sigma0); // population prior with unknown parameters'
+  '    sigma ~ cauchy(0,4);      // weakly informative prior '
+  '    for (n in 1:N)'
+  '      y[n] ~ normal(mu[x[n]], sigma);'
+  '}'
+             };
+% Data for Stan
+d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
+% Is there difference between different summer months?
+x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
+y=double(d(:,2:5))';y=y(:);
+N=numel(x);
+dat = struct('N',N,...
+             'K',4,... % 4 groups
+             'x',x,... % group indicators
+             'y',y);   % observations
+% Compile and fit the model
+fit = stan('model_code',hier_code,'data',dat,'sample_file','kilpis','file_overwrite',true,'verbose',true);
+fit.block()
+
+% Plot
+samples=fit.extract('permuted',true);
+mu0 = samples.mu0;
+std(mu0)
+mu = samples.mu;
+boxplot(mu)
+% matrix of probabilities that one mu is larger than other
+for k1=1:4
+  for k2=(k1+1):4
+    ps(k1,k2)=mean(mu(:,k1)>mu(:,k2));
+    ps(k2,k1)=1-ps(k1,k2);
+  end
+end
+ps
+
+
+%% Hierarchical prior for means and variances in comparison of k groups
+% results do not differ much from the previous, because there is only
+% few groups and quite much data per group, but this works as an example anyway
+hier_code = {
+  'data {'
+  '    int<lower=0> N; // number of data points '
+  '    int<lower=0> K; // number of groups '
+  '    int<lower=1,upper=K> x[N]; // group indicator '
+  '    vector[N] y; // '
+  '}'
+  'parameters {'
+  '    real mu0;             // prior mean '
+  '    real<lower=0> sigma0; // prior std '
+  '    vector[K] mu;         // group means '
+  '    real sigma;           // common std '
+  '}'
+  'model {'
+  '    mu0 ~ normal(10,10);      // weakly informative prior '
+  '    sigma0 ~ cauchy(0,4);     // weakly informative prior '
+  '    mu ~ normal(mu0, sigma0); // population prior with unknown parameters'
+  '    sigma ~ cauchy(0,4);      // weakly informative prior '
+  '    for (n in 1:N)'
+  '      y[n] ~ normal(mu[x[n]], sigma);'
+  '}'
+             };
+% Data for Stan
+d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
+% Is there difference between different summer months?
+x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
+y=double(d(:,2:5))';y=y(:);
+N=numel(x);
+dat = struct('N',N,...
+             'K',4,... % 4 groups
+             'x',x,... % group indicators
+             'y',y);   % observations
+% Compile and fit the model
+fit = stan('model_code',hier_code,'data',dat,'sample_file','kilpis','file_overwrite',true,'verbose',true);
+fit.block()
+
+% Plot
+samples=fit.extract('permuted',true);
+mu0 = samples.mu0;
+std(mu0)
+mu = samples.mu;
+boxplot(mu)
+% matrix of probabilities that one mu is larger than other
+for k1=1:4
+  for k2=(k1+1):4
+    ps(k1,k2)=mean(mu(:,k1)>mu(:,k2));
+    ps(k2,k1)=1-ps(k1,k2);
+  end
+end
+ps
+
+
+%% Hierarchical prior for means and variances in comparison of k groups
+% results do not differ much from the previous, because there is only
+% few groups and quite much data per group, but this works as an example anyway
+hier_code = {
+  'data {'
+  '    int<lower=0> N; // number of data points '
+  '    int<lower=0> K; // number of groups '
+  '    int<lower=1,upper=K> x[N]; // group indicator '
+  '    vector[N] y; // '
+  '}'
+  'parameters {'
+  '    real mu0;               // prior mean '
+  '    real<lower=0> musigma0; // prior std '
+  '    vector[K] mu;           // group means '
+  '    real lsigma0;            '
+  '    real<lower=0> lsigma0s;  '
+  '    vector<lower=0>[K] sigma; // group stds '
+  '}'
+  'model {'
+  '    mu0 ~ normal(100,10);        // weakly informative prior '
+  '    musigma0 ~ cauchy(0,10);     // weakly informative prior '
+  '    mu ~ normal(mu0, musigma0);  // population prior with unknown parameters'
+  '    lsigma0 ~ normal(2,1);       // weakly informative prior '
+  '    lsigma0s ~ normal(0,2);      // weakly informative prior '
+  '    sigma ~ lognormal(lsigma0, lsigma0s); // population prior with unknown parameters'
   '    for (n in 1:N)'
   '      y[n] ~ normal(mu[x[n]], sigma[x[n]]);'
   '}'
@@ -433,3 +592,5 @@ for k1=1:4
   end
 end
 ps
+
+
