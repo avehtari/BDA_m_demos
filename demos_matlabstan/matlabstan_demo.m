@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-11-05 10:12:20 EET
+%   Last modified: 2015-11-05 11:06:18 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -554,11 +554,11 @@ hier_code = {
   '    vector<lower=0>[K] sigma; // group stds '
   '}'
   'model {'
-  '    mu0 ~ normal(100,10);        // weakly informative prior '
+  '    mu0 ~ normal(10,10);         // weakly informative prior '
   '    musigma0 ~ cauchy(0,10);     // weakly informative prior '
   '    mu ~ normal(mu0, musigma0);  // population prior with unknown parameters'
-  '    lsigma0 ~ normal(2,1);       // weakly informative prior '
-  '    lsigma0s ~ normal(0,2);      // weakly informative prior '
+  '    lsigma0 ~ normal(0,1);       // weakly informative prior '
+  '    lsigma0s ~ normal(0,1);      // weakly informative prior '
   '    sigma ~ lognormal(lsigma0, lsigma0s); // population prior with unknown parameters'
   '    for (n in 1:N)'
   '      y[n] ~ normal(mu[x[n]], sigma[x[n]]);'
