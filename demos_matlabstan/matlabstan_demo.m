@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-11-06 10:34:19 EET
+%   Last modified: 2015-11-06 11:23:18 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -346,8 +346,8 @@ group_code = {
   '    vector[N] y; // '
   '}'
   'parameters {'
-  '    vector[K] mu;    // group means '
-  '    real sigma;      // common std '
+  '    vector[K] mu;        // group means '
+  '    real<lower=0> sigma; // common std '
   '}'
   'model {'
   '    for (n in 1:N)'
@@ -439,7 +439,7 @@ hier_code = {
   '    real mu0;             // prior mean '
   '    real<lower=0> sigma0; // prior std '
   '    vector[K] mu;         // group means '
-  '    real sigma;           // common std '
+  '    real<lower=0> sigma;  // common std '
   '}'
   'model {'
   '    mu0 ~ normal(10,10);      // weakly informative prior '
