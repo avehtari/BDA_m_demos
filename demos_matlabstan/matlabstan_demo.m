@@ -187,13 +187,13 @@ d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',tr
 x=repmat(double(d(:,1)),1,4)';x=x(:);
 y=double(d(:,2:5))';y=y(:);
 N=numel(x);
-dat = struct('N',N,...
-             'x',x,...
-             'y',y,...
-             'pmualpha',mean(y),... % centered
-             'psalpha',(14-4)/6,... % avg temp between 4-14
+dat = struct('N',N, ...
+             'x',x, ...
+             'y',y, ...
+             'pmualpha',mean(y), ... % centered
+             'psalpha',(14-4)/6, ... % avg temp between 4-14
              'pmubeta',0,...        % a priori increase and decrese as likely
-             'psbeta',(.1--.1)/6... % avg temp probably does not increase more than 1 degree per 10 years
+             'psbeta',(.1--.1)/6 ... % avg temp probably does not increase more than 1 degree per 10 years
              );
 % Compile and fit the model
 fit = stan('model_code',linear_code,'data',dat,'sample_file','kilpis','file_overwrite',true,'verbose',true);
