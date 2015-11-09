@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-11-06 11:23:18 EET
+%   Last modified: 2015-11-09 16:24:47 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -123,7 +123,10 @@ linear_code = {
    '}'
    'generated quantities {'
    '    real ypred;'
+   '    vector[N] log_lik;'
    '    ypred <- normal_rng(alpha + beta*xpred, sigma);'
+   '    for (n in 1:N)'
+   '        log_lik[n] <- normal_log(y[n], alpha + beta*x[n], sigma);'
    '}'
 };
 % Data for Stan
@@ -155,6 +158,9 @@ mean(beta>0)
 subplot(1,3,3)
 hist(samples.ypred,50)
 xlabel(sprintf('y-prediction for x=%d', xpred))
+
+% psis-loo
+[loo,~,khat] = psisloo(samples.log_lik);
 
 %% Gaussian linear model with adjustable priors
 linear_code = {
