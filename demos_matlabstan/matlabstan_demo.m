@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-11-09 16:24:47 EET
+%   Last modified: 2015-12-09 16:34:21 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -131,8 +131,8 @@ linear_code = {
 };
 % Data for Stan
 d = dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
-x = repmat(double(d(:,1)),1,4)'; x = x(:);
-y = double(d(:,2:5))'; y = y(:);
+x = repmat(double(d(:,1)),1,3)'; x = x(:);
+y = double(d(:,2:4))'; y = y(:);
 N = numel(x);
 xpred = 2016;
 dat = struct('N',N, 'x',x,'y',y,'xpred',xpred);
@@ -190,8 +190,8 @@ linear_code = {
 };
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
-x=repmat(double(d(:,1)),1,4)';x=x(:);
-y=double(d(:,2:5))';y=y(:);
+x=repmat(double(d(:,1)),1,3)';x=x(:);
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N, ...
              'x',x, ...
@@ -260,8 +260,8 @@ linear_code = {
 };
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
-x=repmat(double(d(:,1)),1,4)';x=x(:);
-y=double(d(:,2:5))';y=y(:);
+x=repmat(double(d(:,1)),1,3)';x=x(:);
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N,...
              'x',x,...
@@ -312,8 +312,8 @@ linear_code = {
 };
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
-x=repmat(double(d(:,1)),1,4)';x=x(:);
-y=double(d(:,2:5))';y=y(:);
+x=repmat(double(d(:,1)),1,3)';x=x(:);
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N,...
              'x',x,...
@@ -363,11 +363,11 @@ group_code = {
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
 % Is there difference between different summer months?
-x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
-y=double(d(:,2:5))';y=y(:);
+x=repmat([1:3]',size(d,1),1); % summer months are numbered from 1 to 3
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N,...
-             'K',4,... % 4 groups
+             'K',3,... % 3 groups
              'x',x,... % group indicators
              'y',y);   % observations
 % Compile and fit the model
@@ -379,8 +379,8 @@ samples=fit.extract('permuted',true);
 mu = samples.mu;
 boxplot(mu)
 % matrix of probabilities that one mu is larger than other
-for k1=1:4
-  for k2=(k1+1):4
+for k1=1:3
+  for k2=(k1+1):3
     ps(k1,k2)=mean(mu(:,k1)>mu(:,k2));
     ps(k2,k1)=1-ps(k1,k2);
   end
@@ -407,11 +407,11 @@ group_code = {
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
 % Is there difference between different summer months?
-x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
-y=double(d(:,2:5))';y=y(:);
+x=repmat([1:3]',size(d,1),1); % summer months are numbered from 1 to 3
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N,...
-             'K',4,... % 4 groups
+             'K',3,... % 3 groups
              'x',x,... % group indicators
              'y',y);   % observations
 % Compile and fit the model
@@ -423,8 +423,8 @@ samples=fit.extract('permuted',true);
 mu = samples.mu;
 boxplot(mu)
 % matrix of probabilities that one mu is larger than other
-for k1=1:4
-  for k2=(k1+1):4
+for k1=1:3
+  for k2=(k1+1):3
     ps(k1,k2)=mean(mu(:,k1)>mu(:,k2));
     ps(k2,k1)=1-ps(k1,k2);
   end
@@ -459,11 +459,11 @@ hier_code = {
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
 % Is there difference between different summer months?
-x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
-y=double(d(:,2:5))';y=y(:);
+x=repmat([1:3]',size(d,1),1); % summer months are numbered from 1 to 3
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N,...
-             'K',4,... % 4 groups
+             'K',3,... % 3 groups
              'x',x,... % group indicators
              'y',y);   % observations
 % Compile and fit the model
@@ -517,11 +517,11 @@ hier_code = {
 % Data for Stan
 d=dataset('File','kilpisjarvi-summer-temp.csv','Delimiter',';','ReadVarNames',true);
 % Is there difference between different summer months?
-x=repmat([1:4]',size(d,1),1); % summer months are numbered from 1 to 4
-y=double(d(:,2:5))';y=y(:);
+x=repmat([1:3]',size(d,1),1); % summer months are numbered from 1 to 3
+y=double(d(:,2:4))';y=y(:);
 N=numel(x);
 dat = struct('N',N,...
-             'K',4,... % 4 groups
+             'K',3,... % 3 groups
              'x',x,... % group indicators
              'y',y);   % observations
 % Compile and fit the model
