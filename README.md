@@ -6,4 +6,4 @@ Currently there are demos for BDA3 Chapters 2, 3, 4, 5, 6, 10 and 11. Furthermor
 
 These demos were written for Matlab/Octave by Aki Vehtari.
 
-The corresponding [Python demos](https://github.com/avehtari/BDA_py_demos)
+The corresponding [Python demos](https://github.com/avehtari/BDA_py_demos) and [R demos](https://github.com/avehtari/BDA_R_demos)
