@@ -3,7 +3,12 @@
 
 % Visualise the joint density and marginal densities of the posterior
 % of normal distribution with unknown mean and variance.
-  
+%
+% Note that here pdf's are used for the illustration.  In real
+% applications it is better do computations using log-pdfs to maintain
+% the numerical stability when magnitude of the density is very small
+% or very large.
+
 % data
 y=[93 112 122 135 122 150 118 90 124 114];
 % sufficient statistics
