@@ -1,7 +1,7 @@
 % Bayesian data analysis
 % Aki Vehtari <Aki.Vehtari@aalto.fi>
 
-% Demonstrate normal model for the Newcomb's data (BDA3 p. 66)
+% Estimating the speed of light using normal model BDA3 p. 66
 
 % data
 y=load('light.txt');

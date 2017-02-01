@@ -12,7 +12,7 @@ clf
 % default settings for the figure
 set(gcf,'DefaultAxesFontSize',16,'DefaultAxesFontWeight','bold')
 set(gcf,'DefaultLineLineWidth',2)
-set(gcf,'Position',[620 60 400 640]);
+set(gcf,'Position',[120 10 800 640]);
 
 % compute the posterior density in grid
 %  - usually should be computed in logarithms!
@@ -28,19 +28,6 @@ for i=1:50
     p(j,i)=prod((1./(exp(-(a+b.*x))+1)).^y.*(1-1./(exp(-(a+b.*x))+1)).^(n-y));
   end
 end
-
-% plot the distribution in color
-subplot(3,1,1)
-pcolor(A,B,p);
-shading interp
-set(gcf,'renderer','painters')
-xlim([-2 8])
-ylim([-2 40])
-xlabel('alpha')
-ylabel('beta')
-
-% plot samples from the distribution
-subplot(3,1,2)
 % catrand performs 2D-grid-sampling given values p in the grid
 r=catrand(p,1000,1);
 % r has indeces to a matrix (grid) length(A) x length(B)
@@ -48,6 +35,27 @@ r=catrand(p,1000,1);
 % to index vectors A and B
 [I,J]=ind2sub(size(p),r);
 a=A(J);b=B(I);
+
+% plot the data
+subplot(2,2,3)
+h=plot(x,y/5,'ro');set(h,'linewidth',2,'markersize',10)
+xlabel('Log dose')
+ylabel('Proportion of deaths')
+pause
+
+% plot the distribution in color
+subplot(2,2,1)
+pcolor(A,B,p);
+shading interp
+set(gcf,'renderer','painters')
+xlim([-2 8])
+ylim([-2 40])
+xlabel('alpha')
+ylabel('beta')
+pause
+
+% plot samples from the distribution
+subplot(2,2,2)
 % compute the grid spacing
 ad=A(2)-A(1);bd=B(2)-B(1);
 % add random jitter (see BDA3 p. 76)
@@ -56,10 +64,23 @@ xlim([-2 8])
 ylim([-2 40])
 xlabel('alpha')
 ylabel('beta')
+pause
+
+% plot some samples from the distribution
+subplot(2,2,3)
+hold on
+xt=linspace(-1,1,100)';
+fs=logitinv(bsxfun(@plus,a(2:11),bsxfun(@times,b(2:11),xt)));
+h=plot(xt,fs,'b');set(h,'linewidth',1);
+pause
+% plot mean and [5%,95%] interval
+delete(h)
+fs=logitinv(bsxfun(@plus,a(1:end),bsxfun(@times,b(1:end),xt)));
+h=plot(xt,mean(fs,2),'b',xt,prctile(fs',[5 95])','b--');set(h,'linewidth',1);
 
 pause
 % plot the histogram of LD50 conditonal beta>0
-subplot(3,1,3)
+subplot(2,2,4)
 % logical vector for beta>0
 bpi=b>0;
 hist(-a(bpi)./b(bpi),[-0.5:0.02:0.5])
