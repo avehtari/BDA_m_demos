@@ -52,7 +52,7 @@ contour(T1,T2,Z,linspace(1e-5,max(Z(:)),6),'b');
 % store axes handle
 ha=gca;
 % legend
-h=legend('Exact contour plot',2);
+h=legend('Exact contour plot','location','northwest');
 set(h,'FontSize',14)
 fprintf('.')
 pause
@@ -62,7 +62,7 @@ pause
 hold on
 plot(mu,sigma,'.','Color',[0 0.5 0]);
 hold off
-h=legend('Exact contour plot','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 xlim(tl1)
 ylim(tl2)
@@ -73,7 +73,7 @@ pause
 
 % illustrate the projection to mu
 hl=line([mu mu]',[sigma repmat(tl2(1),size(sigma))]','Color','k','LineStyle',':','LineWidth',1);
-h=legend('Exact contour plot','Samples from the joint posterior','Projection to mu',2);
+h=legend('Exact contour plot','Samples from the joint posterior','Projection to mu','location','northwest');
 set(h,'FontSize',14)
 % draw now, then compute something before pause. This way after
 % the pause we do not need to wait for those computations
@@ -91,13 +91,13 @@ fprintf('.')
 % pause
 pause
 % change the legend in the first subplot
-h=legend('Exact contour plot','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 % plot the marginal posterior p(mu|y)
 axes('Position',[0.05 0.07 0.5 0.37],'Box','on')
 plot(t1,pm,t1,pk,'--')
 set(gca,'YTick',[])
-legend('Exact','Empirical',2)
+legend('Exact','Empirical','location','northwest')
 xlabel('Marginal of mu')
 % delete the projection lines
 delete(hl)
@@ -106,7 +106,7 @@ pause
 % illustrate the projection to sigma
 set(gcf,'CurrentAxes',ha)
 hl=line([mu repmat(tl1(2),size(mu))]',[sigma sigma]','Color','k','LineStyle',':','LineWidth',1);
-h=legend('Exact contour plot','Samples from the joint posterior','Projection to sigma',2);
+h=legend('Exact contour plot','Samples from the joint posterior','Projection to sigma','location','northwest');
 set(h,'FontSize',14)
 drawnow
 
@@ -121,7 +121,7 @@ fprintf('.')
 % pause
 pause
 % change the legend in the first subplot
-h=legend('Exact contour plot','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 % plot the marginal distribution p(sigma2|y)
 axes('Position',[0.60 0.5 0.37 0.48],'Box','on')

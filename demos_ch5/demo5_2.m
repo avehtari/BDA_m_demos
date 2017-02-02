@@ -100,7 +100,7 @@ subplot(3,1,2)
 h1=plot(t,tm,'b',t,tm(1,:),'r');
 xlim([0 35])
 title('Conditional posterior means of effects E(\theta_j|\tau,y)')
-hl=legend([h1(end) h1(1)],'School A','Other schools',2);
+hl=legend([h1(end) h1(1)],'School A','Other schools','location','northwest');
 set(hl,'FontSize',14)
 xlabel('\tau')
 ylabel('E(\theta_j|\tau,y)')
@@ -109,7 +109,7 @@ subplot(3,1,3)
 h1=plot(t,tsd,'b',t,tsd(1,:),'r');
 xlim([0 35])
 title('Conditional posterior standard deviations of effects sd(\theta_j|\tau,y)')
-hl=legend([h1(end) h1(1)],'School A','Other schools',2);
+hl=legend([h1(end) h1(1)],'School A','Other schools','location','northwest');
 set(hl,'FontSize',14)
 xlabel('\tau')
 ylabel('std(\theta_j|\tau,y)')

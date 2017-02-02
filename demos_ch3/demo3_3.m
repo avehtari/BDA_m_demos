@@ -51,7 +51,7 @@ set(gca,'XLim',tl1,'YLim',tl2)
 xlabel('mu')
 ylabel('sigma')
 % legend
-h=legend('Exact contour plot',2);
+h=legend('Exact contour plot','location','northwest');
 set(h,'FontSize',14)
 
 % compute the exact marginal density
@@ -83,7 +83,7 @@ for i1=1:50
   hl2=line(t1,sigma(i1)+normpdf(t1,my,sqrt(sigma2(i1)/n))*100,'Color',[0 0.5 0],'LineStyle','--','LineWidth',2);
   if i1==1
     % plot legend only once
-    h=legend([hc, hl1, hl2],'Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu',2);
+    h=legend([hc, hl1, hl2],'Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','location','northwest');
     set(h,'FontSize',14)
   end
   set(gcf,'CurrentAxes',ha2)
@@ -91,7 +91,7 @@ for i1=1:50
   set(gca,'YTick',[],'YLim',[0 0.1])
   if i1==1
     % plot legend only once
-    h=legend('Samples of conditionals of mu',2);
+    h=legend('Samples of conditionals of mu','location','northwest');
     set(h,'FontSize',14)
   end
   pause(0.1)
@@ -100,14 +100,14 @@ for i1=1:50
   hs=line(mu(i1),sigma(i1),'LineStyle','none','Marker','.','Color',[0 .5 0]);
   if i1==1
     % plot legend only once
-    h=legend([hc, hl1, hl2, hs],'Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','Samples from the joint posterior',2);
+    h=legend([hc, hl1, hl2, hs],'Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','Samples from the joint posterior','location','northwest');
     set(h,'FontSize',14)
   end
   pause(0.1)
   delete(hl1)
   delete(hl2)
 end
-h=legend([hc, hs],'Exact contour plot','Samples from the joint posterior',2);
+h=legend([hc, hs],'Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
     
 % compute the marginal distribution using mixture of conditional distributions
@@ -131,5 +131,5 @@ pm=tpdf((t1-mean(y))/sqrt(s2/n),n-1)./sqrt(s2/n);
 plot(t1,pm,t1,pp)
 set(gca,'YTick',[],'YLim',[0 0.1])
 % legend
-h=legend('Exact marginal','Average of sampled conditionals',2);
+h=legend('Exact marginal','Average of sampled conditionals','location','northwest');
 set(h,'FontSize',14);

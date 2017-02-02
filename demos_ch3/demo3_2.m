@@ -50,7 +50,7 @@ contour(T1,T2,Z,linspace(1e-5,max(Z(:)),6),'b');
 % store axes handle
 ha=gca;
 % legend
-h=legend('Exact contour plot',2);
+h=legend('Exact contour plot','location','northwest');
 set(h,'FontSize',14)
 %
 set(gca,'XLim',tl1,'YLim',tl2)
@@ -80,22 +80,22 @@ x=linspace(tl1(1),tl1(2),1000);
 i1=1;
 % first sample sigma2 (here we plot sigma instead)
 hl1=line(tl1,[sigma(i1) sigma(i1)]','Color','k','LineStyle','--','LineWidth',2);
-h=legend('Exact contour plot','Sample from the marginal of sigma',2);
+h=legend('Exact contour plot','Sample from the marginal of sigma','location','northwest');
 set(h,'FontSize',14)
 pause
 % plot the conditional distribution of mu given sigma2
 % (scaling of pdf is just for illustration)
 hl2=line(x,sigma(i1)+normpdf(x,my,sqrt(sigma2(i1)/n))*100,'Color',[0 0.5 0],'LineStyle','--','LineWidth',2);
-h=legend('Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu',2);
+h=legend('Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','location','northwest');
 set(h,'FontSize',14)
 pause
 % sample mu given sigma2 
 hs=line(mu(i1),sigma(i1),'LineStyle','none','Marker','.','Color',[0 0.5 0],'MarkerSize',30);
-h=legend('Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','Sample from the joint posterior',2);
+h=legend('Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','Sample from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 pause
 set(hs,'MarkerSize',6)
-h=legend('Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Sample from the marginal of sigma','Conditional distribution of mu','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 % delete the lines showing sigma sample and conditional of mu
 delete(hl1)
@@ -115,5 +115,5 @@ for i1=2:100
   delete(hl1)
   delete(hl2)
 end
-h=legend('Exact contour plot','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)

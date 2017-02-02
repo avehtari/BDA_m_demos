@@ -23,7 +23,7 @@ aa=437+ap;bb=543+bp;
 hold on
 plot(x,betapdf(x,ap,bp),'k:',x,betapdf(x,aa,bb),'r')
 hold off
-h=legend('Post with unif prior','Informative prior','Posterior',2);
+h=legend('Post with unif prior','Informative prior','Posterior','location','northwest');
 set(h,'FontSize',12,'FontWeight','normal')
 % Additional decoration
 set(gca,'XLim',[0.375 0.525],'XTick',[0.4 0.45 0.485 0.5])

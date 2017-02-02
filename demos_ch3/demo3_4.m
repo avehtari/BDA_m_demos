@@ -56,7 +56,7 @@ set(gca,'XLim',[90 150],'YLim',yl)
 xlabel('mu')
 ylabel('sigma')
 % legend
-h=legend('Exact contour plot','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 
 % plot ynew
@@ -70,7 +70,7 @@ ha2=gca;
 i1=1;
 set(gcf,'CurrentAxes',ha)
 hl1=line(mu(i1),sigma(i1),'LineStyle','none','Marker','.','Color','r','markersize',20);
-h=legend('Exact contour plot','Samples from the joint posterior','A sample from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','A sample from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 pause
 
@@ -80,11 +80,11 @@ x=linspace(50,185,1000);
 hl2=line(x,normpdf(x,my,sqrt(sigma2(i1)/n)),'Color','b','LineStyle','-','LineWidth',2);
 % plot a sample form the predictive distribution
 hl3=line(ynew(i1),0.0001,'LineStyle','none','Marker','.','Color','r','MarkerSize',20);
-h=legend('The pred.dist. given the posterior sample','A sample from the predictive distribution',2);
+h=legend('The pred.dist. given the posterior sample','A sample from the predictive distribution','location','northwest');
 set(h,'FontSize',14)
 
 pause
-h=legend('The pred.dist. given the posterior sample','Samples from the predictive distribution',2);
+h=legend('The pred.dist. given the posterior sample','Samples from the predictive distribution','location','northwest');
 set(h,'FontSize',14)
 delete(hl1)
 delete(hl2)
@@ -107,7 +107,7 @@ for i1=2:50
   set(hl3,'Color',[0 0.5 0],'Markersize',6)
 end
 set(gcf,'CurrentAxes',ha)
-h=legend('Exact contour plot','Samples from the joint posterior',2);
+h=legend('Exact contour plot','Samples from the joint posterior','location','northwest');
 set(h,'FontSize',14)
 
 
