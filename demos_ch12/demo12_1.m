@@ -32,7 +32,7 @@ grad=@(x) (S\x')';                  % gradient
 opt=hmc2_opt;
 opt.steps=1;     
 opt.stepadj=0.05;
-opt.nsamples=20;
+opt.nsamples=40;
 opt.persistence=1;
 opt.decay=1;
 fprintf('Running HMC')
@@ -75,51 +75,51 @@ set(hl,'FontSize',14)
 % wait for enter
 pause
 
-% plot progression 1:20
+% plot progression 1:40
 h1=line(tt(i1,1),tt(i1,2),'LineStyle','-','Marker','none','color',[0 0.5 0]);
 h2=line(tt(i1,1),tt(i1,2),'LineStyle','none','Marker','o');
 hl=legend([he hs],'90% HPD','Samples','location','southeast');
-for i1=1:20
+for i1=1:40
     % plot the trajectory
     set(h1,'XData',tt(max(1,i1-100):i1,1),'YData',tt(max(1,i1-100):i1,2))
-    if i1>=20
-        set(h2,'XData',tt(20:20:i1,1),'YData',tt(20:20:i1,2))
+    if i1>=40
+        set(h2,'XData',tt(40:40:i1,1),'YData',tt(40:40:i1,2))
     end
-    pause(0.5)
+    pause(0.1)
 end
 % wait for enter
 pause
 
-% plot progression 21:40
-for i1=21:40
+% plot progression 41:80
+for i1=41:80
     % plot the trajectory
     set(h1,'XData',tt(max(1,i1-100):i1,1),'YData',tt(max(1,i1-100):i1,2))
-    if i1>=20
-        set(h2,'XData',tt(20:20:i1,1),'YData',tt(20:20:i1,2))
+    if i1>=40
+        set(h2,'XData',tt(40:40:i1,1),'YData',tt(40:40:i1,2))
     end
-    pause(0.5)
+    pause(0.1)
 end
 % wait for enter
 pause
 
-% plot progression 41:60
-for i1=41:60
+% plot progression 81:120
+for i1=81:120
     % plot the trajectory
     set(h1,'XData',tt(max(1,i1-100):i1,1),'YData',tt(max(1,i1-100):i1,2))
-    if i1>=20
-        set(h2,'XData',tt(20:20:i1,1),'YData',tt(20:20:i1,2))
+    if i1>=40
+        set(h2,'XData',tt(40:40:i1,1),'YData',tt(40:40:i1,2))
     end
-    pause(0.5)
+    pause(0.1)
 end
 % wait for enter
 pause
 
-% plot progression 61:1000
-for i1=61:1000
+% plot progression 121:1000
+for i1=121:1000
     % plot the trajectory
     set(h1,'XData',tt(max(1,i1-100):i1,1),'YData',tt(max(1,i1-100):i1,2))
-    if i1>=20
-        set(h2,'XData',tt(20:20:i1,1),'YData',tt(20:20:i1,2))
+    if i1>=40
+        set(h2,'XData',tt(40:40:i1,1),'YData',tt(40:40:i1,2))
     end
     pause(0.01)
 end
@@ -172,7 +172,7 @@ h1=plot([burnin:M],cumsum(tt(burnin:M,:))./repmat([1:length(burnin:M)]',1,2));
 line([burnin M],[0 0])
 axis([105 5000 -0.5 0.2])
 title('Cumulative average')
-hl=legend(h1,'\theta_1', '\theta_2',4);
+hl=legend(h1,'\theta_1', '\theta_2','location','southeast');
 set(hl,'FontSize',14)
 
 subplot(3,1,3)
