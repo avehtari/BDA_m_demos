@@ -34,6 +34,26 @@ tt(1,:)=[t1 t2]; % save starting point
 Y1=linspace(-4.5,4.5,200);
 Y2=linspace(-4.5,4.5,200);
 
+% Illustrate the target distribution
+clf
+Y1=linspace(-4.5,4.5,200);
+Y2=linspace(-4.5,4.5,200);
+lp=zeros(200);
+for i1=1:length(Y1)
+  for i2=1:length(Y2)
+    lp(i1,i2)=mnorm_lpdf([Y1(i1) Y2(i2)],[y1 y2],S);
+  end
+end
+pcolor(Y1,Y2,exp(lp))
+shading interp
+set(gca,'DataAspectRatio',[1 1 1])
+set(gca,'Box','on')
+set(gcf,'renderer','painters')
+xlabel('\theta_1')
+ylabel('\theta_2')
+title('Toy target distribution')
+pause
+
 % Gibbs sampling here
 % For demonstration load pre-computed values
 % Replace this with your algorithm!

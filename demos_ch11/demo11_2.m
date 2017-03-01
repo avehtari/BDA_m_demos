@@ -23,26 +23,6 @@ tt=zeros(M,2);   % variable for saving samples
 tt(1,:)=[t1 t2]; % save starting point
 rr=0;            % variable for saving number of rejections
 
-% Illustrate the target distribution
-clf
-Y1=linspace(-4.5,4.5,200);
-Y2=linspace(-4.5,4.5,200);
-lp=zeros(200);
-for i1=1:length(Y1)
-  for i2=1:length(Y2)
-    lp(i1,i2)=mnorm_lpdf([Y1(i1) Y2(i2)],[y1 y2],S);
-  end
-end
-pcolor(Y1,Y2,exp(lp))
-shading interp
-set(gca,'DataAspectRatio',[1 1 1])
-set(gca,'Box','on')
-set(gcf,'renderer','painters')
-xlabel('\theta_1')
-ylabel('\theta_2')
-title('Toy target distribution')
-pause
-
 % Metropolis sampling here
 % For demonstration load pre-computed values
 % Replace this with your algorithm!
@@ -89,7 +69,7 @@ pause
 % plot progession during 20 first iterations
 samplestring='Starting point';
 ht=text(-4,4,'','FontSize',16,'FontWeight','bold','Color','b');
-for i1=1:20
+for i1=1:10
   % plot the 90% HPD of the proposal distribution
   h1=ellipse(sp*2.147,sp*2.147,0,tt(i1,1),tt(i1,2),'b');
   hl=legend([he hs h1],'90% HPD',samplestring,'Proposal distribution (90% HPD)','location','southeast');
@@ -129,14 +109,14 @@ pause
 
 % connect the samples with a line
 h1=line(tt(1,1),tt(1,2),'Marker','o');
-line(tt(1:21,1),tt(1:21,2));
+line(tt(1:11,1),tt(1:11,2));
 hl=legend([he h1],'90% HPD','Markov chain','location','southeast');
 set(hl,'FontSize',14)
 
 pause
 
 % plot progession up to 200 first iterations
-for i1=22:201
+for i1=12:201
   line(tt(i1-1:i1,1),tt(i1-1:i1,2));
   h2=line(tt(i1,1),tt(i1,2),'Marker','o','LineStyle','none');
   if ttall(i1,1)==tt(i1+1,1) && ttall(i1,2)==tt(i1+1,2)
@@ -201,7 +181,7 @@ h1=plot([warmup:M],cumsum(tt(warmup:M,:))./repmat([1:length(warmup:M)]',1,2));
 line([warmup M],[0 0])
 axis([105 5000 -0.5 0.2])
 title('Cumulative average')
-hl=legend(h1,'\theta_1', '\theta_2',4);
+hl=legend(h1,'\theta_1', '\theta_2','southeast');
 set(hl,'FontSize',14)
 
 subplot(3,1,3)
