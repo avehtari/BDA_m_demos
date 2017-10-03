@@ -1,6 +1,10 @@
 % Bayesian data analysis
 % Aki Vehtari <Aki.Vehtari@aalto.fi>
 
+% This demo illustrates resmapling importance sampling with Pareto
+% smoothed weights and diagnostics. The proposal distribution is
+% normal distribution at the mode (as in demo4_1).
+
 % Bioassay data, (BDA3 page 86)
 x=[-.86 -.30 -.05 .73]';
 n=[5 5 5 5]';
@@ -139,7 +143,9 @@ for i=1:1000
 end
 lw=lq-lg;
 % Pareto smoothed importance (log) weights
-[lw,pk]=psislwy3st(lw);
+% Aki Vehtari, Andrew Gelman and Jonah Gabry (2016). Pareto smoothed
+% importance sampling. arXiv preprint arXiv:1507.02646.
+[lw,pk]=psislw(lw);
 % Pareto diagnostic
 pk
 % above weights could used when comouting expectations,
@@ -151,11 +157,8 @@ subplot(3,3,8)
 a=ris(:,1);b=ris(:,2);
 plot(a,b,'.')
 axis([-2 6 -10 30])
-% Normal approximation does not take into account that the posterior
-% is not symmetric and that there is very low density for negative
-% beta values. Based on the draws from the normal approximation
-% is is estimated that there is about 6% probability that beta is negative!
-text(-1.5,-7,sprintf('p(beta>0)=%.2f',0.999),'FontSize',14,'FontWeight','bold');
+% importance sampling is able to get more accurate estimate of p(beta>0)
+text(-1.5,-7,sprintf('p(beta>0)=%.3f',0.999),'FontSize',14,'FontWeight','bold');
 
 % plot histogram of LD50
 subplot(3,3,9)
