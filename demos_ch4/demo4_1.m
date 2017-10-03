@@ -1,6 +1,10 @@
 % Bayesian data analysis
 % Aki Vehtari <Aki.Vehtari@aalto.fi>
 
+% This demo illustrates normal distribution at the mode approximation,
+% also known as Laplace approximation. See demo10_3 for importance
+% sampling improvement of the distributional approximation.
+
 % Bioassay data, (BDA3 page 86)
 x=[-.86 -.30 -.05 .73]';
 n=[5 5 5 5]';
@@ -135,4 +139,3 @@ bpi=b>0;
 hist(-a(bpi)./b(bpi),[-1:0.04:1])
 set(gca,'YTick',[],'XTick',[-0.8:0.4:0.8],'XLim',[-0.8 0.8])
 xlabel(['LD50 = -alpha/beta';'            beta>0'])
-
