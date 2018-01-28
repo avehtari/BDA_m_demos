@@ -1,5 +1,5 @@
 %   Author: Vehtari Aki <Aki.Vehtari@aalto.fi>
-%   Last modified: 2015-12-09 16:34:21 EET
+%   Last modified: 2018-01-28 16:53:19 EET
 
 % When running in brute.aalto.fi
 addpath ~ave/matlab/MatlabProcessManager
@@ -92,7 +92,7 @@ binomial_code={
   '}'
   'generated quantities {'
   '  real oddsratio;'
-  '  oddsratio <- (theta2/(1-theta2))/(theta1/(1-theta1));'
+  '  oddsratio = (theta2/(1-theta2))/(theta1/(1-theta1));'
   '}'
               };
 dat=struct('N1',674,'y1',39,'N2',680,'y2',22);
@@ -116,7 +116,7 @@ linear_code = {
    '}'
    'transformed parameters {'
    '    vector[N] mu;'
-   '    mu <- alpha + beta*x;'
+   '    mu = alpha + beta*x;'
    '}'
    'model {'
    '    y ~ normal(mu, sigma);'
@@ -124,9 +124,9 @@ linear_code = {
    'generated quantities {'
    '    real ypred;'
    '    vector[N] log_lik;'
-   '    ypred <- normal_rng(alpha + beta*xpred, sigma);'
+   '    ypred = normal_rng(alpha + beta*xpred, sigma);'
    '    for (n in 1:N)'
-   '        log_lik[n] <- normal_log(y[n], alpha + beta*x[n], sigma);'
+   '        log_lik[n] = normal_log(y[n], alpha + beta*x[n], sigma);'
    '}'
 };
 % Data for Stan
@@ -180,7 +180,7 @@ linear_code = {
   '}'
   'transformed parameters {'
   '    vector[N] mu;'
-  '    mu <- alpha + beta*x;'
+  '    mu = alpha + beta*x;'
   '}'
   'model {'
   '    alpha ~ normal(pmualpha,psalpha);'
@@ -234,8 +234,8 @@ linear_code = {
   'transformed data {'
   '  vector[N] x_std;'
   '  vector[N] y_std;'
-  '  x_std <- (x - mean(x)) / sd(x);'
-  '  y_std <- (y - mean(y)) / sd(y);'
+  '  x_std = (x - mean(x)) / sd(x);'
+  '  y_std = (y - mean(y)) / sd(y);'
   '}'
   'parameters {'
   '    real alpha; '
@@ -244,7 +244,7 @@ linear_code = {
   '}'
   'transformed parameters {'
   '    vector[N] mu_std;'
-  '    mu_std <- alpha + beta*x_std;'
+  '    mu_std = alpha + beta*x_std;'
   '}'
   'model {'
   '  alpha ~ normal(0,1);'
@@ -254,8 +254,8 @@ linear_code = {
   'generated quantities {'
   '    vector[N] mu;'
   '    real<lower=0> sigma;'
-  '    mu <- mean(y) + mu_std*sd(y);'
-  '    sigma <- sigma_std*sd(y);'
+  '    mu = mean(y) + mu_std*sd(y);'
+  '    sigma = sigma_std*sd(y);'
   '}'
 };
 % Data for Stan
@@ -303,7 +303,7 @@ linear_code = {
    '}'
    'transformed parameters {'
    '    vector[N] mu;'
-   '    mu <- alpha + beta*x;'
+   '    mu = alpha + beta*x;'
    '}'
    'model {'
    '    nu ~ gamma(2,0.1); // Juárez and Steel (2010)'
